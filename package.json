@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "^8.0.0-beta.11",
+    "nuxt": "^3.4.3"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^0.4.1",
+    "@pinia/nuxt": "^0.4.2",
+    "chart.js": "^4.3.0",
+    "gsap": "^3.11.4",
+    "pinia": "^2.0.29",
+    "primefaces": "^12.0.0",
+    "primeflex": "^3.2.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.27.0",
+    "prismjs": "^1.29.0",
+    "sass": "^1.58.0",
+    "sass-loader": "^13.0.2"
+  }
+}

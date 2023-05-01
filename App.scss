@@ -1,0 +1,31 @@
+@font-face {
+  font-family: samim;
+  src: url(./assets/fonts/samim/Samim.ttf);
+  font-display: block;
+}
+@font-face {
+  font-family: samim;
+  src: url(./assets/fonts/samim/Samim-Bold.ttf);
+  font-weight: bold;
+  font-display: block;
+}
+* {
+  box-sizing: border-box;
+  font-family: "samim" !important;
+}
+
+// body,
+// html {
+  // margin: 0;
+  // padding: 0;
+  // background-color: #1e1e1e !important;
+  // scroll-behavior: smooth;
+// }
+
+body {
+  font-family: var(--font-family);
+} 
+
+.pi{
+  font-family: "primeicons" !important;
+}
