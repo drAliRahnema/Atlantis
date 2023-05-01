@@ -9,7 +9,7 @@ export const useAppStore = defineStore("app", () => {
     
     componentTheme: "blue",
     topbarTheme: "blue",
-    menuMode: "overlay",
+    menuMode: "overlay",//"sidebar",//"horizontal",//"static",//"slim",//"overlay",
     ripple: true,
   });
   const loading = reactive({

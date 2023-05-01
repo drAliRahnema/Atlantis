@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
   activeInlineProfile: false,
   sidebarActive: false,
   sidebarStatic: false,
-  pinActive: false
+  pinActive: false,
 });
 
 

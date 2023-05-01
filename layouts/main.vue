@@ -33,13 +33,13 @@
         <AppFooter :colorScheme="appConfig.layout.colorScheme" />
       </div>
 
-      <!-- <AppRightMenu
+      <AppRightMenu
         :rightMenuActive="rightMenuActive"
         @rightmenu-click="onRightMenuClick"
         @rightmenu-active="onChangeRightMenuActive"
-      /> -->
+      />
 
-      <!-- <AppConfig
+      <AppConfig
         v-model:menuMode="appConfig.layout.menuMode"
         :theme="appConfig.layout.theme"
         :componentTheme="appConfig.layout.componentTheme"
@@ -54,7 +54,7 @@
         @change-component-theme="onChangeComponentTheme"
         @change-menu-theme="onChangeMenuTheme"
         @change-menu-mode="onChangeMenuMode"
-      /> -->
+      />
     </div>
   </div>
 </template>
@@ -290,7 +290,9 @@ const onMenuItemClick = (event: { item: { items: any; }; }) => {
 };
 
 const onChangeMenuMode = (menuMode: string) => {
+  console.log(menuMode)
   appConfig.changeMenuMode(menuMode);
+  appConfig.layout.menuMode = menuMode;
   overlayMenuActive.value = false;
 };
 
@@ -396,32 +398,16 @@ const onChangeColorScheme = (colorScheme: string) => {
 };
 const onChangeMenuTheme = (theme: string) => {
   appConfig.changeMenuTheme(theme);
-  const layoutLink = document.getElementById("layout-css");
-  const href =
-    "layout/css/" +
-    theme +
-    "/layout-" +
-    appConfig.layout.colorScheme +
-    "-" +
-    appConfig.layout.direction +
-    ".css";
-
-  replaceLink(layoutLink, href);
+  
+  const dir = appConfig.layout.direction;
+  const colorScheme = appConfig.layout.colorScheme;
+  changeStyleSheetUrl("layout-css", dir, theme, colorScheme, "layout");
 };
 const onChangeComponentTheme = (theme: string) => {
   appConfig.changeComponentTheme(theme);
-  const themeLink = document.getElementById("theme-css");
-  const href =
-    "theme/" +
-    theme +
-    "/theme-" +
-    appConfig.layout.colorScheme +
-    "-" +
-    appConfig.layout.direction +
-    ".css";
-  if (themeLink){
-    replaceLink(themeLink, href);
-  }
+  const dir = appConfig.layout.direction;
+  const colorScheme = appConfig.layout.colorScheme;
+  changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
 };
 const changeStyleSheetUrl = (id: string, dir: string, theme: string, colorScheme: string, name: string): void => {
   // console.log("changeStyleSheetUrl (main.vue):",dir,theme,colorScheme,name);
