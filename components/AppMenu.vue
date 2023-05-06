@@ -2,16 +2,25 @@
   <div class="layout-menu-wrapper" :class="{ 'layout-sidebar-active': sidebarActive }" @click="onMenuClick"
     @mouseover="onSidebarMouseOver" @mouseleave="onSidebarMouseLeave">
     <div class="menu-logo">
+
+
+      
+            
+
       <a href="#" class="logo">
-        <img :src="'layout/images/logo-' + (colorScheme === 'light' ? 'dark' : 'light') + '.png'
-          " />
+        <img
+              :src="(`/layout/images/logo-${color}.png`)"
+              class="login-logo w-2"
+              :alt="config.Title"
+            />
       </a>
 
       <a href="#" class="app-name">
-        <img :src="'layout/images/appname-' +
-          (colorScheme === 'light' ? 'dark' : 'light') +
-          '.png'
-          " />
+        <img
+              :src="('/layout/images/appname-' + color + '.png')"
+              class="login-appname"
+              :alt="config.Title"
+            />
       </a>
       <a href="#" class="menu-pin" @click="onToggleMenu">
         <span v-if="isOverlay()" class="pi pi-times"></span>
@@ -36,7 +45,7 @@
 
 import { useAppStore } from "@/stores/app";
 
-const appConfig = useAppStore();
+const appState = useAppStore();
 const config = useAppConfig();
 const router = useRouter()
 const route = useRoute()
@@ -128,7 +137,10 @@ const isMobile = (): boolean => {
 }
 
 // computed
-
+const color = computed(() => {
+  if (appState.layout.colorScheme === "light") return "dark";
+  return "light";
+})
 // vue
 
 </script>
