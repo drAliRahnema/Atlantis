@@ -3,10 +3,6 @@
     @mouseover="onSidebarMouseOver" @mouseleave="onSidebarMouseLeave">
     <div class="menu-logo">
 
-
-      
-            
-
       <a href="#" class="logo">
         <img
               :src="(`/layout/images/logo-${color}.png`)"
@@ -83,13 +79,7 @@ const emit = defineEmits([
   "change-inlinemenu",])
 
 // vars
-const menu = ref<any[]>([
-  {
-    label: "Favorites",
-    icon: "pi pi-fw pi-home",
-    items: [{ label: "Dashboard Sales", icon: "pi pi-fw pi-home", to: "/" }],
-  }
-])
+
 
 // methods
 

@@ -3,20 +3,43 @@
     <!-- <AppLoader v-if="appConfig.loading.app" />  -->
     <div :class="layoutContainerClass" @click="onDocumentClick">
       <div class="layout-main">
-        <AppTopBar :items="menu" :menuMode="appConfig.layout.menuMode" :colorScheme="appConfig.layout.colorScheme"
-          :menuActive="menuActive" :topbarMenuActive="topbarMenuActive" :activeInlineProfile="activeInlineProfile"
-          @topbar-item-click="onTopbarItemClick" @menubutton-click="onMenuButtonClick"
-          @sidebar-mouse-over="onSidebarMouseOver" @sidebar-mouse-leave="onSidebarMouseLeave" @toggle-menu="onToggleMenu"
-          @change-inlinemenu="onChangeActiveInlineMenu" @menu-click="onMenuClick" @menuitem-click="onMenuItemClick"
-          @root-menuitem-click="onRootMenuItemClick" @change-direction="onChangeDirection($event)"
-          @change-color-scheme="onChangeColorScheme" />
+        <AppTopBar
+          :items="menu"
+          :menuMode="appConfig.layout.menuMode"
+          :colorScheme="appConfig.layout.colorScheme"
+          :menuActive="menuActive"
+          :topbarMenuActive="topbarMenuActive"
+          :activeInlineProfile="activeInlineProfile"
+          @topbar-item-click="onTopbarItemClick"
+          @menubutton-click="onMenuButtonClick"
+          @sidebar-mouse-over="onSidebarMouseOver"
+          @sidebar-mouse-leave="onSidebarMouseLeave"
+          @toggle-menu="onToggleMenu"
+          @change-inlinemenu="onChangeActiveInlineMenu"
+          @menu-click="onMenuClick"
+          @menuitem-click="onMenuItemClick"
+          @root-menuitem-click="onRootMenuItemClick"
+          @change-direction="onChangeDirection($event)"
+          @change-color-scheme="onChangeColorScheme"
+        />
 
-        <AppMenu :model="menu" :menuMode="appConfig.layout.menuMode" :colorScheme="appConfig.layout.colorScheme"
-          :menuActive="menuActive" :sidebarActive="sidebarActive" :sidebarStatic="sidebarStatic" :pinActive="pinActive"
-          :activeInlineProfile="activeInlineProfile" @sidebar-mouse-over="onSidebarMouseOver"
-          @sidebar-mouse-leave="onSidebarMouseLeave" @toggle-menu="onToggleMenu"
-          @change-inlinemenu="onChangeActiveInlineMenu" @menu-click="onMenuClick" @menuitem-click="onMenuItemClick"
-          @root-menuitem-click="onRootMenuItemClick" />
+        <AppMenu
+          :model="menu"
+          :menuMode="appConfig.layout.menuMode"
+          :colorScheme="appConfig.layout.colorScheme"
+          :menuActive="menuActive"
+          :sidebarActive="sidebarActive"
+          :sidebarStatic="sidebarStatic"
+          :pinActive="pinActive"
+          :activeInlineProfile="activeInlineProfile"
+          @sidebar-mouse-over="onSidebarMouseOver"
+          @sidebar-mouse-leave="onSidebarMouseLeave"
+          @toggle-menu="onToggleMenu"
+          @change-inlinemenu="onChangeActiveInlineMenu"
+          @menu-click="onMenuClick"
+          @menuitem-click="onMenuItemClick"
+          @root-menuitem-click="onRootMenuItemClick"
+        />
 
         <!-- <AppBreadcrumb
           :menuMode="appConfig.layout.menuMode"
@@ -60,64 +83,26 @@
 </template>
 
 <script setup lang="ts">
+import EventBus from '../components/EventBus';
 
 import { useAppStore } from "@/stores/app";
 const appConfig = useAppStore();
 const config = useAppConfig();
 
 import { useI18n } from "vue-i18n";
-const { locale,setLocale, t } = useI18n();
+const { locale, setLocale, t } = useI18n();
+
+import { usePrimeVue } from 'primevue/config';
+
+const PrimeVue = usePrimeVue();
 
 
-// let name = t('pages.home');
-// console.log("==================",locale.value, t('pages.home'),"===================");
 
 
-useHead({
-  // bodyAttrs: {
-  //   "dir" : appConfig.layout.direction
-  // },
-  script: [
-    // {
-    //   src: '',
-    //   integrity: "",
-    //   crossorigin:"anonymous",
-    //   body: true
-    // }
-  ],
-  link: [
-    // { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-    // {
-    //   rel: "stylesheet",
-    //   href:
-    //     "/theme/" +
-    //     appConfig.layout.componentTheme +
-    //     "/theme-" +
-    //     appConfig.layout.colorScheme +
-    //     "-" +
-    //     appConfig.layout.direction +
-    //     ".css",
-    //   type: "text/css",
-    //   id: "theme-css",
-    // },
-    {
-      rel: "stylesheet",
-      href:
-        `${config.Base_URL}theme/${appConfig.layout.direction}/${appConfig.layout.theme}/bootstrap4-${appConfig.layout.colorScheme}.css`,
-      type: "text/css",
-      id: "theme-css",
-    },
-    {
-      rel: "stylesheet",
-      href: `${config.Base_URL}layout/css/${appConfig.layout.direction}/${appConfig.layout.theme}/layout-${appConfig.layout.colorScheme}.css`,
-      type: "text/css",
-      id: "layout-css",
-    },
-  ],
-});
+const currentTheme = ref(`${appConfig.layout.themeName}-${appConfig.layout.colorScheme}-${appConfig.layout.theme}`);
 
-onUpdated(()=>{
-  // alert("wah") 
+
+onUpdated(() => {
 });
 onMounted(() => {
   // setTimeout(() => {
@@ -125,7 +110,9 @@ onMounted(() => {
   // }, 1500);
 
   // fix on route lang locale change
-  const currentLang = appConfig.params.constants.languages.find(item => item.code == locale.value)
+  const currentLang = appConfig.params.constants.languages.find(
+    (item) => item.code == locale.value
+  );
   if (currentLang) {
     // alert(currentLang.code);
 
@@ -134,14 +121,11 @@ onMounted(() => {
 
     onChangeDirection(currentLang.dir);
   }
-  
-
 });
 
 watch(locale, (newLocale) => {
-  // console.log(`(main.vue) watch Locale changed to ${newLocale}`);
-})
-
+  console.log(`(main.vue) watch Locale changed to ${newLocale}`);
+});
 
 const search = ref(false);
 const searchClick = ref(false);
@@ -166,9 +150,12 @@ const menu = ref([
   {
     label: config.Title,
     icon: "pi pi-fw pi-home",
-    items: [{ label: t('pages.home'), icon: "pi pi-fw pi-home", to: config.Base_URL }],
+    items: [
+      { label: t("pages.home"), icon: "pi pi-fw pi-home", to: config.Base_URL }
+    ]
   }
 ]);
+
 
 const onDocumentClick = () => {
   if (!searchClick.value && searchActive.value) {
@@ -182,7 +169,7 @@ const onDocumentClick = () => {
   if (!menuClick.value) {
     if (isHorizontal() || isSlim()) {
       menuActive.value = false;
-      // EventBus.emit("reset-active-index");
+      EventBus.emit("reset-active-index");
     }
 
     if (overlayMenuActive.value || staticMenuMobileActive.value) {
@@ -238,7 +225,7 @@ const hideOverlayMenu = () => {
   staticMenuMobileActive.value = false;
 };
 
-const onMenuButtonClick = (event: { preventDefault: () => void; }) => {
+const onMenuButtonClick = (event: { preventDefault: () => void }) => {
   menuClick.value = true;
 
   if (isOverlay()) {
@@ -254,7 +241,7 @@ const onMenuButtonClick = (event: { preventDefault: () => void; }) => {
   event.preventDefault();
 };
 
-const onTopbarItemClick = (event: { preventDefault: () => void; }) => {
+const onTopbarItemClick = (event: { preventDefault: () => void }) => {
   topbarItemClick.value = true;
   topbarMenuActive.value = !topbarMenuActive.value;
   hideOverlayMenu();
@@ -278,10 +265,10 @@ const onRootMenuItemClick = () => {
   menuActive.value = !menuActive.value;
 };
 
-const onMenuItemClick = (event: { item: { items: any; }; }) => {
+const onMenuItemClick = (event: any) => {
   if (!event.item.items) {
     hideOverlayMenu();
-    // EventBus.emit("reset-active-index");
+    EventBus.emit("reset-active-index");
   }
 
   if (!event.item.items && (isHorizontal() || isSlim())) {
@@ -290,9 +277,9 @@ const onMenuItemClick = (event: { item: { items: any; }; }) => {
 };
 
 const onChangeMenuMode = (menuMode: string) => {
-  console.log(menuMode)
+  console.log(menuMode);
   appConfig.changeMenuMode(menuMode);
-  appConfig.layout.menuMode = menuMode;
+  // appConfig.layout.menuMode = menuMode;
   overlayMenuActive.value = false;
 };
 
@@ -300,7 +287,7 @@ const onConfigClick = () => {
   configClick.value = true;
 };
 
-const onConfigButtonClick = (event: { preventDefault: () => void; }) => {
+const onConfigButtonClick = (event: { preventDefault: () => void }) => {
   configActive.value = !configActive.value;
   configClick.value = true;
   event.preventDefault();
@@ -310,7 +297,7 @@ const onChangeRightMenuActive = (active: boolean) => {
   rightMenuActive.value = active;
 };
 
-const onToggleMenu = (event: { preventDefault: () => void; }) => {
+const onToggleMenu = (event: { preventDefault: () => void }) => {
   menuClick.value = true;
 
   if (overlayMenuActive.value) {
@@ -341,7 +328,10 @@ const unblockBodyScroll = () => {
     document.body.classList.remove("blocked-scroll");
   } else {
     document.body.className = document.body.className.replace(
-      new RegExp("(^|\\b)" + "blocked-scroll".split(" ").join("|") + "(\\b|$)", "gi"),
+      new RegExp(
+        "(^|\\b)" + "blocked-scroll".split(" ").join("|") + "(\\b|$)",
+        "gi"
+      ),
       " "
     );
   }
@@ -375,6 +365,14 @@ const isMobile = () => {
   return window.innerWidth <= 991;
 };
 
+const toggleTheme = () => {
+    const nextTheme = `${appConfig.layout.themeName}-${appConfig.layout.colorScheme}-${appConfig.layout.theme}`;
+
+    PrimeVue.changeTheme(currentTheme.value, nextTheme, 'theme-css', () => {});
+
+    currentTheme.value = nextTheme
+}
+
 const onChangeDirection = (dir: string) => {
   // console.log("onChangeDirection (main)", dir)
 
@@ -385,7 +383,6 @@ const onChangeDirection = (dir: string) => {
   const theme = appConfig.layout.theme;
   const colorScheme = appConfig.layout.colorScheme;
   changeStyleSheetUrl("layout-css", dir, theme, colorScheme, "layout");
-  changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
 };
 const onChangeColorScheme = (colorScheme: string) => {
   // console.log("onChangeColorScheme (main)", colorScheme)
@@ -394,11 +391,13 @@ const onChangeColorScheme = (colorScheme: string) => {
   const dir = appConfig.layout.direction;
   const theme = appConfig.layout.theme;
   changeStyleSheetUrl("layout-css", dir, theme, colorScheme, "layout");
-  changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
+  
+  // changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
+  toggleTheme()
 };
 const onChangeMenuTheme = (theme: string) => {
   appConfig.changeMenuTheme(theme);
-  
+
   const dir = appConfig.layout.direction;
   const colorScheme = appConfig.layout.colorScheme;
   changeStyleSheetUrl("layout-css", dir, theme, colorScheme, "layout");
@@ -407,36 +406,50 @@ const onChangeComponentTheme = (theme: string) => {
   appConfig.changeComponentTheme(theme);
   const dir = appConfig.layout.direction;
   const colorScheme = appConfig.layout.colorScheme;
-  changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
+
+  // changeStyleSheetUrl("theme-css", dir, theme, colorScheme, "bootstrap4");
 };
-const changeStyleSheetUrl = (id: string, dir: string, theme: string, colorScheme: string, name: string): void => {
+const changeStyleSheetUrl = (
+  id: string,
+  dir: string,
+  theme: string,
+  colorScheme: string,
+  name: string
+): void => {
   // console.log("changeStyleSheetUrl (main.vue):",dir,theme,colorScheme,name);
-  
+
   const element = document.getElementById(id);
   if (element) {
-    const urlTokens = element.getAttribute("href").split("/");
+    const urlTokens = element.getAttribute("href")?.split("/");
+    if (urlTokens) {
+      urlTokens[urlTokens.length - 1] = `${name}-${colorScheme}.css`;
+      urlTokens[urlTokens.length - 2] = `${theme}`;
+      urlTokens[urlTokens.length - 3] = `${dir}`;
 
-    urlTokens[urlTokens.length - 1] = `${name}-${colorScheme}.css`;
-    urlTokens[urlTokens.length - 2] = `${theme}`;
-    urlTokens[urlTokens.length - 3] = `${dir}`;
+      const newURL = urlTokens.join("/");
 
-    const newURL = urlTokens.join("/");
-
-    setTimeout(() => {
-      replaceLink(element, newURL);
-    });
+      setTimeout(() => {
+        replaceLink(element, newURL);
+      });
+    }
   }
-
 };
 
-const replaceLink = (linkElement: HTMLElement, href: string, callback: (() => void) | undefined = undefined): void => {
+const replaceLink = (
+  linkElement: HTMLElement,
+  href: string,
+  callback: (() => void) | undefined = undefined
+): void => {
   const id = linkElement.getAttribute("id");
   const cloneLinkElement = linkElement.cloneNode(true);
 
   cloneLinkElement.setAttribute("href", href);
   cloneLinkElement.setAttribute("id", id + "-clone");
 
-  linkElement?.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling);
+  linkElement?.parentNode?.insertBefore(
+    cloneLinkElement,
+    linkElement.nextSibling
+  );
 
   cloneLinkElement.addEventListener("load", () => {
     linkElement.remove();
@@ -468,11 +481,42 @@ const layoutContainerClass = computed(() => {
       "layout-sidebar-static":
         appConfig.layout.menuMode === "sidebar" && sidebarStatic.value,
       "layout-static-inactive":
-        staticMenuDesktopInactive.value && appConfig.layout.menuMode === "static",
-      "p-ripple-disabled": appConfig.layout.ripple,
-    },
+        staticMenuDesktopInactive.value &&
+        appConfig.layout.menuMode === "static",
+      "p-ripple-disabled": appConfig.layout.ripple
+    }
   ];
 });
+
+
+useHead({
+  // bodyAttrs: {
+  //   "dir" : appConfig.layout.direction
+  // },
+  script: [ ],
+  link: [
+    // {
+    //   rel: "stylesheet",
+    //   href: `${config.Base_URL}theme/${appConfig.layout.direction}/${appConfig.layout.theme}/bootstrap4-${appConfig.layout.colorScheme}.css`,
+    //   type: "text/css",
+    //   id: "theme-css"
+    // },
+    {
+      rel: "stylesheet",
+      href: `${config.Base_URL}theme/prime/${currentTheme.value}/theme.css`,
+      type: "text/css",
+      id: "theme-css"
+    },
+    {
+      rel: "stylesheet",
+      href: `${config.Base_URL}layout/css/${appConfig.layout.direction}/${appConfig.layout.theme}/layout-${appConfig.layout.colorScheme}.css`,
+      type: "text/css",
+      id: "layout-css"
+    }
+  ]
+});
+
+
 </script>
 
 <style scoped></style>

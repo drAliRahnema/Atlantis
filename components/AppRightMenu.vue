@@ -5,7 +5,7 @@
 		</a>
 		<div class="user-detail-wrapper">
 			<div class="user-detail-content">
-				<img src="layout/images/dashboard/gene.png" :alt="`${config.Title}`" class="user-image">
+				<img src="/layout/images/dashboard/gene.png" :alt="`${config.Title}`" class="user-image">
 				<span class="user-name">Gene Russell</span>
 				<span class="user-number">(406) 555-0120</span>
 			</div>

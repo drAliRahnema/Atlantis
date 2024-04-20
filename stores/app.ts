@@ -3,7 +3,9 @@ export const useAppStore = defineStore("app", () => {
   // vars
   const layout = reactive({
     lang: 'English',//constants.languages.find(item=>item.code == 'en'),
-    theme: "blue",
+    
+    themeName: "lara", // aura, bootstrap4, lara, md
+    theme: "blue", // blue, indigo
     colorScheme: "dark",
     direction: "ltr",
     

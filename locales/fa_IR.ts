@@ -1,6 +1,7 @@
 export default {
   "welcome": "خوش آمدید",
   "hello": "سلام، {name}!",
+  "lang": "زبان",
   "pages":{
     "home": "خانه"
   },

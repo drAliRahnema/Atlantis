@@ -1,6 +1,7 @@
 export default {  
   "welcome": "welcome",
   "hello": "Hello, {name}!",
+  "lang": "language",
   "user":{
     "profile": "Profile",
     "settings": "Settings",

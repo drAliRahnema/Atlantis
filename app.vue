@@ -1,39 +1,37 @@
 <template>
-  <div class="">
-    <!-- <AppLoader/> -->
-
+  <div>
     <NuxtLayout :name="layout">
       <NuxtErrorBoundary>
-        <NuxtPage />
-        <template #error="{error}">
-        <div class="text-center">
-          <p>
-            Oh no, something broke!
-          </p>
-          <code>{{ error }}</code>
-          <Button @click="resetError(error)">Reset</Button>
-        </div>
+        <template #error="{ error }">
+          <div class="text-center">
+            <p>Oh no, something broke!</p>
+            <code>{{ error }}</code>
+            <Button @click="resetError(error)">Reset</Button>
+          </div>
+        </template>
+        <template #default>
+          <!-- <Suspense> -->
+            <NuxtPage />
+          <!-- </Suspense> -->
         </template>
       </NuxtErrorBoundary>
-
     </NuxtLayout>
-
-
     <Toast />
   </div>
 </template>
 
 <script setup lang="ts">
-// import "primeflex/primeflex.css";
 import './App.scss';
 
 import { useAppStore } from "@/stores/app";
-import error from './plugins/error';
+// import error from './plugins/error';
 const route = useRoute();
 const appState = useAppStore();
 
 // You might choose this based on an API call or logged-in status
-const layout = ref<any>(route.name != "report" ? "main" : false);
+// const layout = ref<any>("default");
+const layout = ref<any>("main");
+// const layout = ref<any>(route.name != "report" ? "main" : false);
 // function enableCustomLayout() {
 //   setPageLayout("custom");
 // }
@@ -73,7 +71,7 @@ const resetError = async(error: { value: null; }) =>{
 watch(
 	() => route,
 	(to, from) => {
-		// console.log('Route changed from', from.fullPath, 'to', to.fullPath)
+		console.log('Route changed from', from.fullPath, 'to', to.fullPath)
     
 		// Do something else, like update data based on the route change
     // ...
